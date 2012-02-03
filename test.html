@@ -1,0 +1,43 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jFeed - jQuery feed parser plugin - test</title>
+<script src="src/ifeed.js"></script>
+<script src="src/ifeeditem.js"></script>
+<script src="src/irss.js"></script>
+<script src="src/iatom.js"></script>
+<script src="jquery/jquery.js"></script>
+<script type="text/javascript">
+
+jQuery(function() {
+
+    var feedsUrls = ['xml/rss-091.xml',
+                     'xml/rss-092.xml',
+                     'xml/rss-10.xml',
+                     'xml/rss-20.xml',
+                     'xml/atom.xml'];
+  
+    jQuery().ajaxError(function(request, settings, ex) {
+        console.log('Request error');
+        for(var i in ex) {
+            console.log(i + ': ' + ex[i]);
+        }
+    });
+                 
+    for(var i = 0; i < feedsUrls.length; i++) {
+		jQuery.ajax({
+		url: feedsUrls[i], success: function(xml){
+			console.log(iFeed.get(xml));
+		}});
+       
+    }
+});
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
