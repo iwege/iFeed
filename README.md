@@ -6,7 +6,7 @@ NONE
 
 ## Usage
 
-`var feed = iFeed.get(xml)`
+`var feed = iFeed(xml)`
 
 ## License
 

@@ -7,20 +7,17 @@
 (function(exports){
 	var   query = exports.query
 		, getContent = exports.getContent
-		, feed = {};
+		;
 
 	exports.parser['rss'] = function(xml){
-		feed = {};
-		parse(xml);
-		return feed;
+		return parse(xml);
 	};
 
 		
 	var parse  = function( xml ) {
 		var   ch
-			, _feeds
-			, _items
-			, _url 		
+			, feed = {}
+			, items	
 			;
 
 		if( query(xml, 'rss').length == 0) feed.version = '1.0';
@@ -32,8 +29,9 @@
 			text : getContent(ch, 'title')
 		} 
 	
-		_parseRssLink( ch );
-	
+		feed.links = [];
+		feed.links.push( parseRssLink( ch ) );
+		
 		feed.subtitle = getContent(ch, 'description');
 	
 		feed.publishedDate = feed.lastUpdatedTime = query(ch, 'lastBuildDate').length > 0 ? 
@@ -42,37 +40,38 @@
 
 
 		feed.items = [];
-		_items =  query(xml,'item');
-		_parseItem(_items);
+		
+		items =  query(xml,'item');
+		Array.prototype.forEach.call(items , function(item){
+			feed.items.push( parseItem( item ) );
+		});
+		return feed;
 
 	}
 
-	var _parseRssLink =  function(obj){
+	var parseRssLink =  function(obj){
 		var  url
 			, link = {};
-		feed.links = [];
+
 	
 		url = getContent(obj, 'link');
 		if (! url) url = query(obj,'link')[0].href;
 	
-		link.uri = {
+		url = {
 			  absoluteUri : url
 			, displayUri : url
 		};
 
-		feed.links.push(url);
+		return url;
 	};
 
-	var _parseItem = function(items){
-		var _that = this ;
-	
-		Array.prototype.forEach.call(items , function(item){
+	var parseItem = function(item){
 			var   post = new iFeedItem()
 				, name = '';
 
-			post.title = {};
+			
 			post.title.text = post.title.nodeValue = getContent(item,'title');
-			post.links = [];
+		
 			var _link = query(item, 'link')[0];
 			
 			if (_link) {
@@ -83,7 +82,7 @@
 			post.links.push({
 				text : _link,
 			});
-			post.authors = [];
+		
 			name = '';
 
 			if (query(item,'author').length   > 0) {
@@ -102,17 +101,13 @@
 				}
 			});
 
-			post.content = {};
+		
 			post.content.text = getContent(item, 'description');
 		
 			var publishedDate  = getContent(item, 'pubDate') ? new Date(getContent(item, 'pubDate')) : '';
 			post.publishedDate = post.lastUpdatedTime = publishedDate;
 			post.id = getContent(item, 'guid');
-
-			feed.items.push(post);
-		
-		});
-
+			return post;
 	}
 })(iFeed);
 

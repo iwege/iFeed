@@ -12,62 +12,62 @@
 		;
 		
 	exports.parser['atom'] = function (xml){
-		feed = {};
-		parse(xml);
-		return feed;
+		return parse(xml);
 	};
 	
 	var parse  = function( xml ) {
-	   	var   _ch
-			, _feed
-			, _temp
+	   	var   ch
+			, feed = {}
+			, items
 	
 
-		_ch = query(xml, 'feed')[0];
+		ch = query(xml, 'feed')[0];
 
 		feed.version = '1.0';
 
 		feed.title = {
-			text : getContent(_ch, 'title')
+			text : getContent(ch, 'title')
 		};
 
 		feed.links = [];
 		feed.links.push({
 			uri : {
-				  absoluteUri: query(_ch, 'link')[0].href
-				, displayUri : query(_ch, 'link')[0].href
+				  absoluteUri: query(ch, 'link')[0].href
+				, displayUri : query(ch, 'link')[0].href
 			}
 		});
-		feed.subtitle = getContent(_ch, 'subtitle');
+		feed.subtitle = getContent(ch, 'subtitle');
 		feed.publishedDate = 
-			feed.lastUpdatedTime =  getContent(_ch, 'updated');
+			feed.lastUpdatedTime =  getContent(ch, 'updated');
 
 		feed.items = [];
  		
-		_temp =  query(xml, 'entry');
-		Array.prototype.forEach.call(_temp,function(obj){
-			parseItem(obj);
+		items =  query(xml, 'entry');
+		Array.prototype.forEach.call(items,function(obj){
+			feed.items.push(parseItem(obj));
 		});
+		return feed;
 	};
+	
 	var parseItem = function (obj){
-		// parse posts
-
-	    var _item = new iFeedItem();
+		// parse post
+	    var post = new iFeedItem()
+			, name 
+			, uri 
+			;
 		// get title 
-		_item.title = {};
-		_item.title.text = _item.title.nodeValue = getContent(obj, 'title');
+		post.title.text = post.title.nodeValue = getContent(obj, 'title');
 
 		// get Links 
-		_item.links = [];
-		_item.links.push({
-			text : query(obj, 'link')[0].href,
+		post.links.push({
+			text : query(obj, 'link')[0].href
 		});
 		
 		// get authors
-		var name = query(obj, 'author')[0].name;
-		var uri = query(obj, 'author')[0].uri;
-		_item.authors = [];
-		_item.authors.push({
+		name = query(obj, 'author')[0].name;
+		uri = query(obj, 'author')[0].uri;
+		
+		post.authors.push({
 			nodeName : 'author',
 			name : name ,
 			uri : {
@@ -76,15 +76,15 @@
 		});
 		
 		// get content 
-		_item.content = {};
-		_item.content.text = getContent(obj, 'content');
-		_item.publishedDate = 
-			_item.lastUpdatedTime = getContent(obj, 'updated');
+	
+		post.content.text = getContent(obj, 'content');
+		post.publishedDate = 
+		post.lastUpdatedTime = getContent(obj, 'updated');
 		
 		// get id 
-	    _item.id = getContent(obj, 'id');
+	    post.id = getContent(obj, 'id');
 
-	  feed.items.push(_item);
+		return post;
 }
 })(iFeed);
 

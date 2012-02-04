@@ -5,15 +5,15 @@
  * and GPL (GPL-license.txt) licenses.
  */
 (function(exports){
-	
-	var iFeed = {};
-	
-	exports.iFeed = iFeed;
-	
-	iFeed.get = function(xml){
-		this.type = "error";
-
-		return this._parse(xml);
+	var type
+		, query
+		, parse
+		, iFeed
+		;
+		
+	iFeed = function(xml){
+		type = "error";
+		return parse(xml);
 	}
 
 	iFeed.getContent = function(xml, nodeName, position){
@@ -29,25 +29,27 @@
 		"error":function(xml){
 			return xml;
 		}
-	};
+	}
 
-	iFeed.query = function( xml, nodeName){
+	query = iFeed.query = function( xml, nodeName){
 		if (!xml) return ' ';
 		return xml.querySelectorAll( nodeName );
 	}
+	
+	exports.iFeed = iFeed;
 
-	iFeed._parse = function(xml) {
+	parse = function(xml) {
 		var parser ;
 
-		if (this.query(xml, 'channel').length == 1) {
-		    this.type = 'rss';
+		if (query(xml, 'channel').length == 1) {
+		    type = 'rss';
 		}
 
-		if (this.query(xml, 'feed').length == 1) {	
-		    this.type = 'atom';
+		if (query(xml, 'feed').length == 1) {	
+		    type = 'atom';
 		}
 
-		parser  = this.parser[ this.type ];
+		parser  = iFeed.parser[ type ];
 		// parse to feed 
 		return parser( xml );
 	}

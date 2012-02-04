@@ -28,7 +28,7 @@ jQuery(function() {
     for(var i = 0; i < feedsUrls.length; i++) {
 		jQuery.ajax({
 		url: feedsUrls[i], success: function(xml){
-			console.log(iFeed.get(xml));
+			console.log(iFeed(xml));
 		}});
        
     }

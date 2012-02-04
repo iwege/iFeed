@@ -3,10 +3,15 @@ function iFeedItem() {};
 
 iFeedItem.prototype = {
 
-    title: '',
-    link: '',
-    description: '',
-    updated: '',
-    id: ''
+    title: {
+		text:''
+	}
+    , links: []
+    , authors: []
+    , content: {
+		text:''
+	}
+	, publishedDate:''
+	, lastUpdatedTime:''
+    , id: ''
 };
-
