@@ -9,6 +9,7 @@
 	var   feed = {}
 		, query = exports.query
 		, getContent = exports.getContent
+		, getImage = exports.getImage;
 		;
 		
 	exports.parser['atom'] = function (xml){
@@ -51,7 +52,7 @@
 	
 	var parseItem = function (obj){
 		// parse post
-	    var post = new iFeedItem()
+	    var post = exports.item()
 			, name 
 			, uri 
 			;
@@ -78,6 +79,10 @@
 		// get content 
 	
 		post.content.text = getContent(obj, 'content');
+		post.content.image = getImage(post.content.text);
+		
+		// TODO get non-style content ;
+		 
 		post.publishedDate = 
 		post.lastUpdatedTime = getContent(obj, 'updated');
 		

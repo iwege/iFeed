@@ -7,6 +7,7 @@
 (function(exports){
 	var   query = exports.query
 		, getContent = exports.getContent
+		, getImage = exports.getImage
 		;
 
 	exports.parser['rss'] = function(xml){
@@ -66,7 +67,7 @@
 	};
 
 	var parseItem = function(item){
-			var   post = new iFeedItem()
+			var   post = exports.item()
 				, name = '';
 
 			
@@ -103,7 +104,9 @@
 
 		
 			post.content.text = getContent(item, 'description');
-		
+			post.content.image = getImage(post.content.text);
+			// TODO get non-style content ;
+			
 			var publishedDate  = getContent(item, 'pubDate') ? new Date(getContent(item, 'pubDate')) : '';
 			post.publishedDate = post.lastUpdatedTime = publishedDate;
 			post.id = getContent(item, 'guid');

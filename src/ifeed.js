@@ -5,40 +5,49 @@
  * and GPL (GPL-license.txt) licenses.
  */
 (function(exports){
-	var type
+	var   type
 		, query
-		, parse
-		, iFeed
 		;
 		
-	iFeed = function(xml){
+	var iFeed = function (xml){
 		type = "error";
 		return parse(xml);
 	}
-
+	// get content from xml node 
 	iFeed.getContent = function(xml, nodeName, position){
-		if (!position) { position = 0 };
+		!position && position = 0;
 		var node = iFeed.query( xml, nodeName )[ position ];
-		if (node) {
-			return  node.textContent;
-		}
-		return false;
+		return  node ? node.textContent : false;
+		
 	}
+	
+	// get image url from content ;
+	iFeed.getImage = function(content){
+        var matches = /<img.+src=["'](.+?)["']/i.exec(content);
 
+		return (matches && matches.length > 1) ? matches[1]: '';
+	}
+	
+	// parser settings
 	iFeed.parser = {
+		/**
+		 * if type is not atom or rss,
+		 * it will return the origin xml content to user;
+		 **/
 		"error":function(xml){
 			return xml;
 		}
 	}
-
+	
+	// get sub-node 
 	query = iFeed.query = function( xml, nodeName){
 		if (!xml) return ' ';
 		return xml.querySelectorAll( nodeName );
 	}
 	
 	exports.iFeed = iFeed;
-
-	parse = function(xml) {
+	//set parse fucntion 
+	function parse(xml) {
 		var parser ;
 
 		if (query(xml, 'channel').length == 1) {
