@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>jFeed - test</title>
+<script src='../src/xmlparser.js'></script>
 <script src="../src/ifeed.js"></script>
 <script src="../src/item.js"></script>
 <script src="../src/irss.js"></script>
@@ -28,7 +29,7 @@ jQuery(function() {
     for(var i = 0; i < feedsUrls.length; i++) {
 		jQuery.ajax({
 		url: feedsUrls[i], success: function(xml){
-			console.log(iFeed(xml));
+			console.log(JXON.parser(xml));
 		}});
        
     }
