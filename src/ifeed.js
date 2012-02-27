@@ -27,8 +27,11 @@
 			, regx = /<img.+?src=["'](.+?)["']/ig;
 		while ((tmp = regx.exec(content)) != null)
 		{
+		  // XXX: Why it doesn't change the regx start position without 
+		  // call regx.lastIndex ? Chrome 19.
 		  regx.lastIndex &&  matches.push(tmp[1]);
 		}
+		
 		return (matches && matches.length > 1) ? matches: [];
 	}
 	
@@ -53,14 +56,9 @@
 	//set parse fucntion 
 	function parse(xml) {
 		var parser ;
-
-		if (query(xml, 'channel').length == 1) {
-		    type = 'rss';
-		}
-
-		if (query(xml, 'feed').length == 1) {	
-		    type = 'atom';
-		}
+		// check type;
+		if (query(xml, 'channel').length == 1) type = 'rss';
+		if (query(xml, 'feed').length == 1)   type = 'atom';
 
 		parser  = iFeed.parser[ type ];
 		// parse to feed 
