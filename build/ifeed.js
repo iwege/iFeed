@@ -15,7 +15,7 @@
 	}
 	// get content from xml node 
 	iFeed.getContent = function(xml, nodeName, position){
-		!position && position = 0;
+		if (!position) { position = 0;}
 		var node = iFeed.query( xml, nodeName )[ position ];
 		return  node ? node.textContent : false;
 		
@@ -23,9 +23,13 @@
 	
 	// get image url from content ;
 	iFeed.getImage = function(content){
-        var matches = /<img.+src=["'](.+?)["']/i.exec(content);
-
-		return (matches && matches.length > 1) ? matches[1]: '';
+		var tmp = null,matches = [],count = 0
+			, regx = /<img.+?src=["'](.+?)["']/ig;
+		while ((tmp = regx.exec(content)) != null)
+		{
+		  regx.lastIndex &&  matches.push(tmp[1]);
+		}
+		return (matches && matches.length > 1) ? matches: [];
 	}
 	
 	// parser settings

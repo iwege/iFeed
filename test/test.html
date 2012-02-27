@@ -10,14 +10,16 @@
 <script src="../src/iatom.js"></script>
 <script src="jquery.js"></script>
 <script type="text/javascript">
+var xmll = [];
 // TODO need a Qunit test;
 jQuery(function() {
 
-    var feedsUrls = ['xml/rss-091.xml',
-                     'xml/rss-092.xml',
-                     'xml/rss-10.xml',
-                     'xml/rss-20.xml',
-                     'xml/atom.xml'];
+    var feedsUrls = [//'http://news.163.com/special/00011K6L/rss_newstop.xml',
+                     'http://cnbeta.feedsportal.com/c/34306/f/624776/index.rss',
+                     'http://www.engadget.com/rss.xml',
+                     //'xml/rss-20.xml',
+                     //'xml/atom.xml'
+					];
   
     jQuery().ajaxError(function(request, settings, ex) {
         console.log('Request error');
@@ -25,11 +27,11 @@ jQuery(function() {
             console.log(i + ': ' + ex[i]);
         }
     });
-                 
+     
     for(var i = 0; i < feedsUrls.length; i++) {
 		jQuery.ajax({
 		url: feedsUrls[i], success: function(xml){
-			console.log(JXON.parser(xml));
+			console.log(iFeed(xml));
 		}});
        
     }
