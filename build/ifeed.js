@@ -1,8 +1,8 @@
 
 (function(w){
-	isWorker = w.document ? 0 : 1;
+	var isWorker = w.document ? 0 : 1;
 	if (isWorker) {
-		importScripts.apply(["feedparser.js"]);
+		importScripts('feedparser.js');
 		w.onmessage = function(msg){
 			iFeed(msg.data,function(feed){
 				w.postMessage(feed);

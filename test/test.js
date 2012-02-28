@@ -14,7 +14,7 @@ jQuery().ajaxError(function(request, settings, ex) {
 });
 
 var time = 0;
-var loop = 1000;
+var loop = 1;
 var count = loop*feedsUrls.length;
 var j = 0;
 // TODO need a Qunit test;

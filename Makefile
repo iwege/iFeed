@@ -24,6 +24,6 @@ worker:
 
 ifeed: ${JS_FILES} 
 	@@ cat ${JS_FILES} |\
-	 	sed '/config.js/d' |\
+	 	sed "s_'utils.js','sax.js',__" |\
 		sed '/irss.js/d' |\
 	    sed 's/parserSripts/\[\"feedparser.js\"\]/'> ${BUILD_DIR}/ifeed.js

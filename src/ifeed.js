@@ -2,8 +2,7 @@
 (function(w){
 	var isWorker = w.document ? 0 : 1;
 	if (isWorker) {
-		importScripts('config.js');
-		importScripts.apply(parserSripts);
+		importScripts('utils.js','sax.js','feedparser.js');
 		w.onmessage = function(msg){
 			iFeed(msg.data,function(feed){
 				w.postMessage(feed);
@@ -63,5 +62,5 @@
 
 })(self || window);
 
-try{ importSripts('irss.js','item.js','iatom.js')}catch(e){}
+try{ importScripts('irss.js','item.js','iatom.js')}catch(e){}
 
