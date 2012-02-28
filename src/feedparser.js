@@ -687,4 +687,4 @@ FeedParser.prototype._reset = function (callback) {
   this.callback = ('function' == typeof callback) ? callback : undefined;
 }
  w.FeedParser = FeedParser;
-})(self);
+})(self || window || exports);
