@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>iFeed - test</title>
+<title>iFeed - Normal Browser Test </title>
 <script >
 	
 </script>
@@ -16,24 +16,6 @@
 <script src="../src/irss.js"></script>
 <script src="jquery.js"></script>
 <script src="test.js"></script>
-<script type="text/javascript">
-// TODO need a Qunit test;
-$(function() {
-
-   feedsUrls.forEach(function(url,i){
-		jQuery.ajax({
-				url: feedsUrls[i], 
-				dataType:'TEXT',
-				success: function(xml){
-						iFeed(xml,function(){
-							console.log(arguments);
-						});
-				}});
-		});
-});
-
-</script>
-
 </head>
 <body>
 

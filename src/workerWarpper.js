@@ -4,13 +4,39 @@
  * licensed under the MIT (MIT-license.txt)
  */
 (function(exports){
-	var iFeed = function (xml, callback){
-		var worker = new Worker('../src/iFeed.js');
-		worker.onmessage = function(evt){
-			callback && callback(evt.data);
+	var list = []
+		, workers = []
+		, status = []
+		, max = 10 
+		;
+	function initWorker(){
+		for (var i=0; i < max; i++) {
+			workers.push(new Worker('../src/iFeed.js'));
+			status.push(0);
 		}
-		worker.postMessage(xml);
 	}
+	
+	var iFeed = function (xml, callback){
+		list.push(xml);
+		findWorker(callback);
+	}
+	var findWorker = function(callback){
+		var index = status.indexOf(0);
+	
+		if (index != -1) {
+			status[index] = 1;
+			workers[index].onmessage = function(evt){
+				callback && callback(evt.data);
+				if (list.length) {
+					status[index] = 1;
+					workers[index].postMessage(list.pop());
+				}
+				status[index] = 0;
+			}
+			workers[index].postMessage(list.pop());
+		}
+	};
+	initWorker();
 	exports.iFeed = iFeed;
 })( window );
 
