@@ -1,6 +1,6 @@
 (function(w){
-	importScripts('utils.js','sax.js','feedParser.js');
 	if (!w.document) {
+		importScripts('utils.js','sax.js','feedParser.js');
 		w.onmessage = function(msg){
 			iFeed(msg.data,function(feed){
 				w.postMessage(feed);
@@ -60,5 +60,7 @@
 	w.iFeed = iFeed;
 	
 })(self || window);
+try{
+	importScripts('irss.js','item.js','iatom.js');
+}catch(e){}
 
-importScripts('irss.js','item.js','iatom.js');
