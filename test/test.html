@@ -3,6 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>jFeed - test</title>
+<script >
+	
+</script>
+<script src="../src/sax.js"></script>
 <script src="../src/ifeed.js"></script>
 <script src="../src/item.js"></script>
 <script src="../src/irss.js"></script>
@@ -13,9 +17,9 @@
 $(function() {
 
     var feedsUrls = ['http://news.163.com/special/00011K6L/rss_newstop.xml',
-                     'http://cnbeta.feedsportal.com/c/34306/f/624776/index.rss',
-                     'http://www.engadget.com/rss.xml',
-                     'http://www.zhihu.com/rss',
+                                     'http://cnbeta.feedsportal.com/c/34306/f/624776/index.rss',
+                                     'http://www.engadget.com/rss.xml',
+                                     'http://www.zhihu.com/rss',
                      'xml/atom.xml'
 					];
   
@@ -25,13 +29,27 @@ $(function() {
             console.log(i + ': ' + ex[i]);
         }
     });
-     
+
+
+	
    feedsUrls.forEach(function(url,i){
-		jQuery.ajax({
-		url: feedsUrls[i], 
-		success: function(xml){
-			console.log(iFeed(xml));
-		}});
+		var fp = new FeedParser();
+		console.log(fp.parseUrl(url,function(){
+			console.log(fp,arguments);
+		}));
+		// jQuery.ajax({
+		// 				url: feedsUrls[i], 
+		// 				dataType:'TEXT',
+		// 				success: function(xml){
+		// 						 var  strict = true, // set to false for html-mode
+		// 						  parser = sax.parser(strict);
+		// 						  parser.onopentag =  function (n){ console.log(n)};
+		// 						  parser.ontext = function(){console.log('text',arguments)};
+		// 						  parser.onclosetag = function(){console.log('close',arguments)};
+		// 						parser.write(xml).close();
+		// 					//console.log(iFeed(xml));
+		// 				}});
+		
 	});
 });
 
