@@ -7,9 +7,9 @@
 	var list = []
 		, workers = []
 		, status = []
-		, max = 10 
+		, max = 10 // set max worker number
 		;
-	function initWorker(){
+	function initWorkers(){
 		for (var i=0; i < max; i++) {
 			workers.push(new Worker('../src/iFeed.js'));
 			status.push(0);
@@ -20,6 +20,7 @@
 		list.push(xml);
 		findWorker(callback);
 	}
+	
 	var findWorker = function(callback){
 		var index = status.indexOf(0);
 	
@@ -36,7 +37,8 @@
 			workers[index].postMessage(list.pop());
 		}
 	};
-	initWorker();
+	
+	initWorkers();
 	exports.iFeed = iFeed;
 })( window );
 
