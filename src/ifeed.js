@@ -41,8 +41,6 @@
 			return xml;
 		}
 	}
-
-
 	//set parse fucntion 
 	function format(xml, callback) {
 		var   parser
