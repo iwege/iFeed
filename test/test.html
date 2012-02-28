@@ -3,22 +3,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>jFeed - test</title>
-<script src='../src/xmlparser.js'></script>
 <script src="../src/ifeed.js"></script>
 <script src="../src/item.js"></script>
 <script src="../src/irss.js"></script>
 <script src="../src/iatom.js"></script>
 <script src="jquery.js"></script>
 <script type="text/javascript">
-var xmll = [];
 // TODO need a Qunit test;
-jQuery(function() {
+$(function() {
 
-    var feedsUrls = [//'http://news.163.com/special/00011K6L/rss_newstop.xml',
+    var feedsUrls = ['http://news.163.com/special/00011K6L/rss_newstop.xml',
                      'http://cnbeta.feedsportal.com/c/34306/f/624776/index.rss',
                      'http://www.engadget.com/rss.xml',
-                     //'xml/rss-20.xml',
-                     //'xml/atom.xml'
+                     'http://www.zhihu.com/rss',
+                     'xml/atom.xml'
 					];
   
     jQuery().ajaxError(function(request, settings, ex) {
@@ -28,13 +26,13 @@ jQuery(function() {
         }
     });
      
-    for(var i = 0; i < feedsUrls.length; i++) {
+   feedsUrls.forEach(function(url,i){
 		jQuery.ajax({
-		url: feedsUrls[i], success: function(xml){
+		url: feedsUrls[i], 
+		success: function(xml){
 			console.log(iFeed(xml));
 		}});
-       
-    }
+	});
 });
 
 </script>
