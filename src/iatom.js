@@ -1,93 +1,76 @@
-/* iAtom : atom format parser 
- * Copyright (C) 2007 Jean-François Hovinne - http://www.hovinne.com/
+/* iAtom : atom format 
+ * Copyright (C) 
  * 				 2011 iwege - http://iwege.com
  * Dual licensed under the MIT (MIT-license.txt)
  * and GPL (GPL-license.txt) licenses.
  */
 
-(function(exports){
-	var   feed = {}
-		, query = exports.query
-		, getContent = exports.getContent
-		, getImage = exports.getImage;
-		;
-		
-	exports.parser['atom'] = function (xml){
-		return parse(xml);
-	};
+(function(exports){	
+	exports.format['atom'] = function(data, items ,callback){
+		return format(data, items, callback );
+	}
 	
-	var parse  = function( xml ) {
-	   	var   ch
-			, feed = {}
-			, items
-	
-
-		ch = query(xml, 'feed')[0];
-
+	var format  = function( data, items, callback ) {
+	   	var   feed = {};
 		feed.version = '1.0';
-
 		feed.title = {
-			text : getContent(ch, 'title')
+			text : data['title']
 		};
-
 		feed.links = [];
 		feed.links.push({
 			uri : {
-				  absoluteUri: query(ch, 'link')[0].href
-				, displayUri : query(ch, 'link')[0].href
+				  absoluteUri: data['link']
+				, displayUri : data['link']
 			}
 		});
-		feed.subtitle = getContent(ch, 'subtitle');
+		feed.subtitle = data['atom:subtitle']['#'];
 		feed.publishedDate = 
-			feed.lastUpdatedTime =  getContent(ch, 'updated');
+			feed.lastUpdatedTime =  data['pubDate'];
 
 		feed.items = [];
- 		
-		items =  query(xml, 'entry');
-		Array.prototype.forEach.call(items,function(obj){
-			feed.items.push(parseItem(obj));
+ 		Array.prototype.forEach.call(items,function(obj){
+			feed.items.push(formatItem(obj));
 		});
+		callback && callback(feed);
 		return feed;
 	};
 	
-	var parseItem = function (obj){
+	var formatItem = function (obj){
 		// parse post
 	    var post = exports.item()
 			, name 
 			, uri 
 			;
 		// get title 
-		post.title.text = post.title.nodeValue = getContent(obj, 'title');
+		post.title.text = post.title.nodeValue = obj.title;
 
 		// get Links 
 		post.links.push({
-			text : query(obj, 'link')[0].href
+			text : obj.link
 		});
 		
 		// get authors
-		name = query(obj, 'author')[0].name;
-		uri = query(obj, 'author')[0].uri;
 		
 		post.authors.push({
 			nodeName : 'author',
-			name : name ,
+			name : obj.author ,
 			uri : {
-					absoluteUri :  uri
+				absoluteUri :  ''
 			}
 		});
 		
 		// get content 
 	
-		post.content.text = getContent(obj, 'content');
-		post.content.image = getImage(post.content.text);
+		post.content.text = obj.description;
+		post.content.image = exports.getImage(post.content.text);
 		
 		// TODO get non-style content ;
 		 
 		post.publishedDate = 
-		post.lastUpdatedTime = getContent(obj, 'updated');
+		post.lastUpdatedTime = obj.pubDate;
 		
 		// get id 
-	    post.id = getContent(obj, 'id');
+	    post.id = obj.guid;
 
 		return post;
 }
