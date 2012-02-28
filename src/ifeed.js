@@ -1,12 +1,16 @@
+
 (function(w){
-	if (!w.document) {
-		importScripts('utils.js','sax.js','feedParser.js');
+	var isWorker = w.document ? 0 : 1;
+	if (isWorker) {
+		importScripts('config.js');
+		importScripts.apply(parserSripts);
 		w.onmessage = function(msg){
 			iFeed(msg.data,function(feed){
 				w.postMessage(feed);
 			});
 		}
 	}
+	
 	var iFeed = function (xml, callback){
 		type = "error";
 		return format(xml, callback);
@@ -56,9 +60,8 @@
 		});
 	}
 	w.iFeed = iFeed;
-	
+
 })(self || window);
-try{
-	importScripts('irss.js','item.js','iatom.js');
-}catch(e){}
+
+try{ importSripts('irss.js','item.js','iatom.js')}catch(e){}
 

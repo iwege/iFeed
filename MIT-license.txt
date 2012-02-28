@@ -1,5 +1,6 @@
-Copyright (C) 2007 Jean-François Hovinne - http://www.hovinne.com/,
-			  2011 iwege - http://iwege.com/
+Copyright (C) 2011 	Dan MacTough <danmactough@gmail.com>
+				    iwege <cyberiwege@gmail.com>
+
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

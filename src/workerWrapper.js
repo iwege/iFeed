@@ -10,12 +10,13 @@
 		, workers = []
 		, status = []
 		, max = 10 // set max worker number
+		, src = '../src/ifeed.js'
 		;
 		
 	// initialize worker and status;
 	function initWorkers(){
 		for (var i=0; i < max; i++) {
-			workers.push(new Worker('../src/iFeed.js'));
+			workers.push(new Worker(src));
 			status.push(0);
 		}
 	}

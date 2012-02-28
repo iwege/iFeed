@@ -1,4 +1,4 @@
-/* iAtom : atom format 
+/* iAtom : atom formater
  * Copyright (C) 
  * 				 2011 iwege - http://iwege.com
  * Dual licensed under the MIT (MIT-license.txt)
