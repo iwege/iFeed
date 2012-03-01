@@ -62,7 +62,7 @@
 		// get content 
 	
 		post.content.text = obj.description;
-		post.content.image = exports.getImage(post.content.text);
+		post.content.image = exports.getImages(post.content.text);
 		
 		// TODO get non-style content ;
 		 

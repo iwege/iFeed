@@ -52,7 +52,7 @@
 			});
 
 			post.content.text = item.description;
-			post.content.image = exports.getImage(post.content.text);
+			post.content.image = exports.getImages(post.content.text);
 			
 			post.publishedDate = post.lastUpdatedTime = item['rss:pubDate'];
 			post.id = item.guid;
