@@ -12,6 +12,7 @@
 	var format  = function( data, items, callback ) {
 		var   feed = {}
 			, items	
+			, time
 			;
 			
 		feed.title = {
@@ -20,8 +21,9 @@
 		feed.links = [];
 		feed.links.push( data['rss:link']['#'] );
 		feed.subtitle = data['rss:description']['#'];
-		
-		feed.publishedDate = feed.lastUpdatedTime = data['pubDate'] || new Date();
+		console.log(data);
+		time = data['pubDate'] ? new Date(data['pubDate']):new Date();
+		feed.publishedDate = feed.lastUpdatedTime = time;
 		feed.items = [];
 		Array.prototype.forEach.call(items , function(item){
 			feed.items.push( formatItem( item ) );

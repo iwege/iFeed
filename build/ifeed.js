@@ -38,7 +38,9 @@
 		tmp && tmp[0] && matches.push(tmp[1]);
 		return matches;
 	}
-	
+	iFeed.trimHTML = function(str){
+		return str.replace(/<\/?[^>]*>/g,'');
+	}
 	iFeed.format = {
 		/**
 		 * if type is not atom or rss,
@@ -67,22 +69,18 @@
 })(self || window);
 
 
-// This format is made for WinJS Feed API
+// This format is made for Google Feed API
 (function(exports){
 	exports.item = function(){
 		return {
-	   	 	title: {
-				text:''
-			}
-		    , links: []
-		    , authors: []
-		    , content: {
-				text:'',
-				image:''
-			}
-			, publishedDate:''
-			, lastUpdatedTime:''
-		    , id: ''
+	   	 	  mediaGroup:''
+			, title:''
+			, link:''
+			, content:''
+			, images:[]
+			, contentSnippet:''
+			, publishedDate:0
+			, categories:[]
 		};
 	}
 })(iFeed);
@@ -102,64 +100,31 @@
 	
 	var format  = function( data, items, callback ) {
 	   	var   feed = {};
-		feed.version = '1.0';
-		feed.title = {
-			text : data['title']
-		};
-		feed.links = [];
-		feed.links.push({
-			uri : {
-				  absoluteUri: data['link']
-				, displayUri : data['link']
-			}
-		});
-		feed.subtitle = data['atom:subtitle']['#'];
-		feed.publishedDate = 
-			feed.lastUpdatedTime =  data['pubDate'];
-
-		feed.items = [];
+		feed.feedUrl = data['xmlUrl'];
+		feed.title = data['title']
+		feed.link = data['link'];
+		feed.description = data['description'];
+		feed.author = data['author'];
+		feed.entries = [];
  		Array.prototype.forEach.call(items,function(obj){
-			feed.items.push(formatItem(obj));
+			feed.entries.push(formatItem(obj));
 		});
 		callback && callback(feed);
 		return feed;
 	};
 	
 	var formatItem = function (obj){
-		// parse post
 	    var post = exports.item()
 			, name 
 			, uri 
 			;
-		// get title 
-		post.title.text = post.title.nodeValue = obj.title;
-
-		// get Links 
-		post.links.push({
-			text : obj.link
-		});
-		
-		// get authors
-		
-		post.authors.push({
-			nodeName : 'author',
-			name : obj.author ,
-			uri : {
-				absoluteUri :  ''
-			}
-		});
-		
-		// get content 
-	
-		post.content.text = obj.description;
-		post.content.image = exports.getImages(post.content.text);
-		
-		// TODO get non-style content ;
-		 
-		post.publishedDate = 
-		post.lastUpdatedTime = new Date(obj.pubDate);
-		
-		// get id 
+		post.title = obj.title;
+		post.link = obj.link;
+		post.author =  obj.author;
+		post.content = obj.description;
+		post.images = exports.getImages(post.content);
+		post.contentSnippet = exports.trimHTML(post.content);
+		post.publishedDate = new Date(obj.pubDate);
 	    post.id = obj.guid;
 
 		return post;
@@ -180,53 +145,37 @@
 	var format  = function( data, items, callback ) {
 		var   feed = {}
 			, items	
+			, time
 			;
-			
-		feed.title = {
-			text : data.title
-		} 
-		feed.links = [];
-		feed.links.push( data['rss:link']['#'] );
-		feed.subtitle = data['rss:description']['#'];
-		
-		feed.publishedDate = feed.lastUpdatedTime = data['pubDate'] || new Date();
-		feed.items = [];
+		feed.title = data.title
+		feed.link = data['link']
+		feed.description = data['description'];
+		time = data['pubDate'] ? new Date(data['pubDate']):new Date();
+		feed.author = data.author;
+		feed.feedUrl = '';
+		feed.entries = [];
 		Array.prototype.forEach.call(items , function(item){
-			feed.items.push( formatItem( item ) );
+			feed.entries.push( formatItem( item ) );
 		});
-		
 		callback( feed );
-		
 		return feed;
 
 	}
 
 	var formatItem = function(item){
-			var   post = exports.item()
-				, name = '';
+			var   post = exports.item();
 	
-			post.title.text = post.title.nodeValue = item.title;		
-			
-			post.links.push({
-				text : item.link,
-			});
-		
-			post.authors.push( {
-				nodeName:'author',
-				name: item.author,
-				uri:{
-					absoluteUri:''
-				}
-			});
-
-			post.content.text = item.description;
-			post.content.image = exports.getImages(post.content.text);
-			
-			post.publishedDate = post.lastUpdatedTime = new Date(item['rss:pubDate']['#']);
+			post.title = item.title;		
+			post.link =  item.link;
+			post.author = item.author;
+			post.content = item.description;
+			post.contentSnippet = exports.trimHTML(post.content);
+			post.image = exports.getImages(post.content);
+			post.categories = item.categories;
+			post.publishedDate = new Date(item['rss:pubDate']['#']);
 			post.id = item.guid;
 			
 			// TODO get non-style content ;
-		
 			
 			return post;
 	}

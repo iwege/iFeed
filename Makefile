@@ -2,9 +2,9 @@ SRC_DIR = src
 BUILD_DIR = build
 
 JS_FILES = ${SRC_DIR}/ifeed.js\
- ${SRC_DIR}/item.js\
- ${SRC_DIR}/iatom.js\
- ${SRC_DIR}/irss.js
+ ${SRC_DIR}/google/item.js\
+ ${SRC_DIR}/google/iatom.js\
+ ${SRC_DIR}/google/irss.js
 FeedParser_FILES = ${SRC_DIR}/utils.js\
  ${SRC_DIR}/sax.js\
  ${SRC_DIR}/feedparser.js
@@ -20,7 +20,7 @@ feedparser: ${FeedParser_FILES}
 
 worker:
 	@@ cat ${SRC_DIR}/workerWrapper.js |\
-		sed 's|src\/iFeed.js|${BUILD_DIR}\/ifeed.js|' > ${BUILD_DIR}/workerWrapper.js
+		sed 's|src\/ifeed.js|${BUILD_DIR}\/ifeed.js|' > ${BUILD_DIR}/workerWrapper.js
 
 ifeed: ${JS_FILES} 
 	@@ cat ${JS_FILES} |\

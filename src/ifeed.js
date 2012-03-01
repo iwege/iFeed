@@ -38,7 +38,9 @@
 		tmp && tmp[0] && matches.push(tmp[1]);
 		return matches;
 	}
-	
+	iFeed.trimHTML = function(str){
+		return str.replace(/<\/?[^>]*>/g,'');
+	}
 	iFeed.format = {
 		/**
 		 * if type is not atom or rss,

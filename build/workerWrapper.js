@@ -10,7 +10,7 @@
 		, workers = []
 		, status = []
 		, max = 10 // set max worker number
-		, src = '../src/ifeed.js'
+		, src = '../build/ifeed.js'
 		;
 		
 	// initialize worker and status;
