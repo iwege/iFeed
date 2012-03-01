@@ -67,7 +67,7 @@
 		// TODO get non-style content ;
 		 
 		post.publishedDate = 
-		post.lastUpdatedTime = obj.pubDate;
+		post.lastUpdatedTime = new Date(obj.pubDate);
 		
 		// get id 
 	    post.id = obj.guid;

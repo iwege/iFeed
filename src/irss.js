@@ -54,7 +54,7 @@
 			post.content.text = item.description;
 			post.content.image = exports.getImages(post.content.text);
 			
-			post.publishedDate = post.lastUpdatedTime = item['rss:pubDate'];
+			post.publishedDate = post.lastUpdatedTime = new Date(item['rss:pubDate']['#']);
 			post.id = item.guid;
 			
 			// TODO get non-style content ;

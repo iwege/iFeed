@@ -157,7 +157,7 @@
 		// TODO get non-style content ;
 		 
 		post.publishedDate = 
-		post.lastUpdatedTime = obj.pubDate;
+		post.lastUpdatedTime = new Date(obj.pubDate);
 		
 		// get id 
 	    post.id = obj.guid;
@@ -222,7 +222,7 @@
 			post.content.text = item.description;
 			post.content.image = exports.getImages(post.content.text);
 			
-			post.publishedDate = post.lastUpdatedTime = item['rss:pubDate'];
+			post.publishedDate = post.lastUpdatedTime = new Date(item['rss:pubDate']['#']);
 			post.id = item.guid;
 			
 			// TODO get non-style content ;
