@@ -34,6 +34,7 @@ $(function() {
 								j ++;
 								if (count == 0) {
 									time += new Date().getTime() - _startTime[0];
+									console.log(feed);
 									console.log(time);
 								}else{
 									console.log(url,'run');

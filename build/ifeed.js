@@ -35,7 +35,7 @@
 		// 
 		// 		}
 		tmp = regx.exec(content);
-		tmp && matches.push(tmp);
+		tmp && tmp[0] && matches.push(tmp[1]);
 		return matches;
 	}
 	
