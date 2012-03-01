@@ -16,22 +16,26 @@
 	}
 	
 	// get image url from content ;
-	iFeed.getImage = function(content){
+	iFeed.getImages = function(content){
 		var tmp = null,matches = [],count = 0
-			, regx = /<img.+?src=["'](.+?)["'].+?>/ig;
-		while ((tmp = regx.exec(content)) != null)
-		{
-		  	// XXX: Why it doesn't change the regx start position without 
-		  	// call regx.lastIndex ? Chrome 19.
-		  	regx.lastIndex;
-
-			// clear feed image;
-		  	if (tmp[1].search('feedsportal.com') == -1) {
-				matches.push(tmp[1]);
-		  	}
-
-		}
-
+			// many gif image is ad image or used for track user.
+			, regx = /<img.+?src=["'](.+?\.(png|jpg|jpeg))["'].+?>/ig;
+	
+		// get all Images from content
+		// while ((tmp = regx.exec(content)) != null)
+		// 		{
+		// 		  	// XXX: Why it doesn't change the regx start position without 
+		// 		  	// call regx.lastIndex ? Chrome 19.
+		// 		  	regx.lastIndex;
+		// 
+		// 			// clear feed image;
+		// 		  	if (tmp[1].search('feedsportal.com') == -1) {
+		// 				matches.push(tmp[1]);
+		// 		  	}
+		// 
+		// 		}
+		tmp = regx.exec(content);
+		tmp && matches.push(tmp);
 		return matches;
 	}
 	
