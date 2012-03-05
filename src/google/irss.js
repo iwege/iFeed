@@ -37,7 +37,7 @@
 			post.author = item.author;
 			post.content = item.description;
 			post.contentSnippet = exports.trimHTML(post.content);
-			post.image = exports.getImages(post.content);
+			post.images = exports.getImages(post.content);
 			post.categories = item.categories;
 			post.publishedDate = new Date(item['rss:pubDate']['#']);
 			post.id = item.guid;
