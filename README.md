@@ -10,7 +10,7 @@ I remove the `parseUrl`, `parseFile` from  feedparser for native browser env;
 
 ## Usage
 
-~~~
+~~~ javascript
 iFeed(xml_string, function callback(feed){
 	//do something with feed/
 });
@@ -22,14 +22,14 @@ So if you use ajax with jquery, you need to set the `dataType` to `TEXT`.
 AND if you don't want to use the feed content format which I used ,you can overwrite the format function in your script.
 But notice if you want to use it in webworker. you need use `importScripts` to add your script in the end of `ifeed.js` like:
 
-~~~ 
+~~~ javascript
 if(isWorker){ importScript('yourscript1.js','yourscript2.js')}
 ~~~
 
 ### No WebWorker
 if you want use it without webworker, you need to put `feedparser.js` and `ifeed.js` in document.
 
-~~~
+~~~ html
 <script src="feedparser.js"></script>
 <script src="ifeed.js"></script>
 ~~~
@@ -37,13 +37,13 @@ if you want use it without webworker, you need to put `feedparser.js` and `ifeed
 ### WebWorker
 1. Use `workerWrapper.js` to load iFeed:
 
-~~~
-<script src="workerWrapper.js"></script>
+~~~ html
+<script src="workerWrapper.js" ></script>
 ~~~
 
 2. start worker with `startWorker` function,set the iFeed.js' path and the number how many workers you want to use, the default number  is 10;
 
-~~~
+~~~ javascript
 startWorker(/*iFeed.js' src[,max worker you want] */);
 ~~~
 
