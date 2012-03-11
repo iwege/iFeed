@@ -1,5 +1,5 @@
 # iFeed - RSS, Atom feed parsing in browser with webworker. 
-
+-----------------------------------------------------------------
 ## Thanks 
 
 * [sax.js](https://github.com/isaacs/sax-js)
@@ -16,7 +16,7 @@ iFeed(xml_string, function callback(feed){
 });
 ~~~
 
-Notice: the input type MUST BE string !! 
+Notice: the input type **MUST BE String** !! 
 So if you use ajax with jquery, you need to set the `dataType` to `TEXT`.
 
 AND if you don't want to use the feed content format which I used ,you can overwrite the format function in your script.
@@ -47,8 +47,6 @@ if you want use it without webworker, you need to put `feedparser.js` and `ifeed
 startWorker(/*iFeed.js' src[,max worker you want] */);
 ~~~
 
-Before you use, you need to configure the `ifeed.js` path with `src` in `workerWrapper.js`,
-Then you can change the max worker you want to use with `max` in `workerWrapper.js`.
 The Number of webworker isn't the more the better, if you set too big , the browser will be crashed.
 
 ## License
