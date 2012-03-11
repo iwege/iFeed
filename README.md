@@ -35,10 +35,16 @@ if you want use it without webworker, you need to put `feedparser.js` and `ifeed
 ~~~
 
 ### WebWorker
-Use `workerWrapper.js` to load iFeed:
+1. Use `workerWrapper.js` to load iFeed:
 
 ~~~
 <script src="workerWrapper.js"></script>
+~~~
+
+2. start worker with `startWorker` function,set the iFeed.js' path and the number how many workers you want to use, the default number  is 10;
+
+~~~
+startWorker(/*iFeed.js' src[,max worker you want] */);
 ~~~
 
 Before you use, you need to configure the `ifeed.js` path with `src` in `workerWrapper.js`,

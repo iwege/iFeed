@@ -57,16 +57,15 @@
 			;
 
 		fp.parseString(xml,function(error,data,items){
-			type = ['rss','atom'].indexOf(data['#type']) != -1 ?
-					   data['#type']
-					 : 'error';
-
+			type = ['rss','atom','rdf'].indexOf(data['#type']) != -1 ?
+					   data['#type']:'error';
 			iFeed.format[type]( data, items, callback );
 		});
 	}
+	
 	w.iFeed = iFeed;
 
 })(self || window);
 
-try{ importScripts('irss.js','item.js','iatom.js')}catch(e){}
+try{ importScripts('irss.js','item.js','iatom.js','irdf.js')}catch(e){}
 

@@ -55,8 +55,13 @@
 		
 	};
 	
-	initWorkers();
+	
 	exports.iFeed = iFeed;
+	exports.startWorker = function(fileSrc,number){
+		if (fileSrc) src = fileSrc; 
+		if (number) max = number;
+		initWorkers();
+	}
 })( window );
 
 

@@ -1595,7 +1595,7 @@ FeedParser.prototype.handleOpenTag = function (node, scope){
   n['#'] = '';
 
   function handleAttributes (attrs, el) {
-    Object.keys(attrs).forEach(function(name){
+     Object.keys(attrs).forEach(function(name){
       if (self.xmlbase.length && (name == 'href' || name == 'src' || name == 'uri')) {
         // Apply xml:base to these elements as they appear
         // rather than leaving it to the ultimate parser
@@ -1626,7 +1626,7 @@ FeedParser.prototype.handleOpenTag = function (node, scope){
     });
     self.xhtml['#'] += '>';
   } else if (self.stack.length == 0 && 
-            (n['#name'] == 'rss' || n['#name'] == 'rdf:rdf' || n['#name'] == 'feed')) {
+            (n['#name'] == 'rss' || n['#name'] == 'rdf:rdf' || n['#name'] == 'rdf:RDF' || n['#name'] == 'feed')) {
     self.meta['#ns'] = [];
     Object.keys(n['@']).forEach(function(name) {
       if (name.indexOf('xmlns') == 0) {
@@ -1635,12 +1635,14 @@ FeedParser.prototype.handleOpenTag = function (node, scope){
         self.meta['#ns'].push(o);
       }
     });
+    
     switch(n['#name']) {
     case 'rss':
       self.meta['#type'] = 'rss';
       self.meta['#version'] = n['@']['version'];
       break;
     case 'rdf:rdf':
+    case 'rdf:RDF':
       self.meta['#type'] = 'rdf';
       self.meta['#version'] = n['@']['version'] || '1.0';
       break;

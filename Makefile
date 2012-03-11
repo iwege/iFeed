@@ -4,7 +4,9 @@ BUILD_DIR = build
 JS_FILES = ${SRC_DIR}/ifeed.js\
  ${SRC_DIR}/google/item.js\
  ${SRC_DIR}/google/iatom.js\
- ${SRC_DIR}/google/irss.js
+ ${SRC_DIR}/google/irss.js\
+ ${SRC_DIR}/google/irdf.js
+ 
 FeedParser_FILES = ${SRC_DIR}/utils.js\
  ${SRC_DIR}/sax.js\
  ${SRC_DIR}/feedparser.js
