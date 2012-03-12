@@ -1496,7 +1496,7 @@ function handleItem (node, type){
  */
 function FeedParser () {
   var self = this;
-  self.saxStream = sax.parser(true); // https://github.com/isaacs/sax-js
+  self.saxStream = sax.parser(false,{lowercasetags:true}); // https://github.com/isaacs/sax-js
   self.saxStream.onerror = function (e){ self.handleError(e, self) };
   self.saxStream.onopentag =  function (n){ self.handleOpenTag(n, self)};
   self.saxStream.onclosetag =  function (el){ self.handleCloseTag(el, self)};
@@ -1626,7 +1626,7 @@ FeedParser.prototype.handleOpenTag = function (node, scope){
     });
     self.xhtml['#'] += '>';
   } else if (self.stack.length == 0 && 
-            (n['#name'] == 'rss' || n['#name'] == 'rdf:rdf' || n['#name'] == 'rdf:RDF' || n['#name'] == 'feed')) {
+            (n['#name'] == 'rss' || n['#name'] == 'rdf:rdf' || n['#name'] == 'feed')) {
     self.meta['#ns'] = [];
     Object.keys(n['@']).forEach(function(name) {
       if (name.indexOf('xmlns') == 0) {
@@ -1642,7 +1642,6 @@ FeedParser.prototype.handleOpenTag = function (node, scope){
       self.meta['#version'] = n['@']['version'];
       break;
     case 'rdf:rdf':
-    case 'rdf:RDF':
       self.meta['#type'] = 'rdf';
       self.meta['#version'] = n['@']['version'] || '1.0';
       break;
