@@ -5,6 +5,7 @@
 		importScripts('utils.js','sax.js','feedparser.js');
 		w.onmessage = function(msg){
 			iFeed(msg.data,function(feed){
+				debugger;
 				w.postMessage(feed);
 			});
 		}
@@ -46,8 +47,8 @@
 		 * if type is not atom or rss,
 		 * it will return the origin xml content to user;
 		 **/
-		"error":function(xml){
-			return xml;
+		"error":function(data, items, callback ){
+			callback("error");
 		}
 	}
 	//set parse fucntion 
@@ -67,5 +68,5 @@
 
 })(self || window);
 
-try{ importScripts('irss.js','item.js','iatom.js','irdf.js')}catch(e){}
+try{ importScripts('google/irss.js','google/item.js','google/iatom.js','google/irdf.js')}catch(e){}
 

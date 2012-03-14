@@ -6,7 +6,7 @@
  * licensed under the MIT (MIT-license.txt)
  */
 (function(exports){
-	var list = []
+	var   list = []
 		, workers = []
 		, status = []
 		, max = 10 // set max worker number
@@ -37,6 +37,7 @@
 		// make it works;
 		status[index] = 1; 
 		workers[index].onmessage = function(evt){
+			console.log(evt);
 			// if worker finished his job, run callback function;
 			callback && callback(evt.data);
 			
