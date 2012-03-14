@@ -12,7 +12,7 @@
 	
 	var format  = function( data, items, callback ) {
 	   	var   feed = {};
-		feed.feedUrl = data['xmlUrl'];
+		feed.feedUrl = data['xmlurl'];
 		feed.title = data['title']
 		feed.link = data['link'];
 		feed.description = data['description'];

@@ -1,9 +1,9 @@
 
 var feedsUrls = [// 'http://news.163.com/special/00011K6L/rss_newstop.xml',
 //                   'http://cnbeta.feedsportal.com/c/34306/f/624776/index.rss',
-                 //'http://www.engadget.com/rss.xml',
-				  //'http://www.w3.org/News/news.rss',
-                  'http://www.bbc.co.uk/news/business-17359394'
+                 'http://www.engadget.com/rss.xml',
+				  'http://www.w3.org/News/news.rss',
+                  //'http://www.bbc.co.uk/news/business-17359394'
 				];
 
 

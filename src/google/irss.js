@@ -39,7 +39,7 @@
 			post.contentSnippet = exports.trimHTML(post.content);
 			post.images = exports.getImages(post.content);
 			post.categories = item.categories;
-			post.publishedDate = new Date(item['rss:pubDate']['#']);
+			post.publishedDate = new Date(item['pubDate']);
 			post.id = item.guid;
 			
 			// TODO get non-style content ;

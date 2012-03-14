@@ -100,7 +100,7 @@
 	
 	var format  = function( data, items, callback ) {
 	   	var   feed = {};
-		feed.feedUrl = data['xmlUrl'];
+		feed.feedUrl = data['xmlurl'];
 		feed.title = data['title']
 		feed.link = data['link'];
 		feed.description = data['description'];
@@ -172,7 +172,7 @@
 			post.contentSnippet = exports.trimHTML(post.content);
 			post.images = exports.getImages(post.content);
 			post.categories = item.categories;
-			post.publishedDate = new Date(item['rss:pubDate']['#']);
+			post.publishedDate = new Date(item['pubDate']);
 			post.id = item.guid;
 			
 			// TODO get non-style content ;
