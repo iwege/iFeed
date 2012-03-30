@@ -5,7 +5,6 @@
 		importScripts('feedparser.js');
 		w.onmessage = function(msg){
 			iFeed(msg.data,function(feed){
-				debugger;
 				w.postMessage(feed);
 			});
 		}
