@@ -35,7 +35,12 @@
 		// 
 		// 		}
 		tmp = regx.exec(content);
-		tmp && tmp[0] && matches.push(tmp[1]);
+		if (tmp&& tmp[0]) {
+			if (tmp[1].indexOf('//') === 0) {
+				tmp[1] = 'http:'+tmp[1];
+			};
+			matches.push(tmp[1]);
+		}
 		return matches;
 	}
 	iFeed.trimHTML = function(str){
